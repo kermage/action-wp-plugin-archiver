@@ -1,0 +1,35 @@
+name: WordPress Plugin Archiver
+author: Gene Alyson Fortunado Torcende
+description: Build an archive of a tagged version in ZIP format
+
+branding:
+  icon: archive
+  color: red
+
+inputs:
+  slug:
+    description: Custom plugin slug
+    # default: ${GITHUB_REPOSITORY#*/}
+
+outputs:
+  export-dir:
+    description: Path to the export directory
+    value: ${{ steps.action.outputs.export-dir }}
+  plugin-zip:
+    description: Path to the generated plugin zip
+    value: ${{ steps.action.outputs.plugin-zip }}
+  plugin-slug:
+    description: Passed value from the input provided
+    value: ${{ steps.action.outputs.plugin-slug }}
+
+runs:
+  using: composite
+  steps:
+    - run: ${{ github.action_path }}/setup.sh
+      shell: bash
+
+    - run: ${{ github.action_path }}/action.sh
+      shell: bash
+      id: action
+      env:
+        INPUT_SLUG: ${{ inputs.slug }}
