@@ -1,0 +1,27 @@
+name: Pre-Release
+
+on:
+  push:
+    branches:
+      - next
+
+jobs:
+  action:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # - name: Prepare Plugin
+      #   run: | # modify this step as needed
+      #     composer install --no-dev
+      #     git add -f vendor
+
+      - uses: kermage/action-wp-plugin-archiver@latest
+        id: archive
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.archive.outputs.plugin-slug }}
+          path: ${{ steps.archive.outputs.export-dir }}
+          include-hidden-files: true
