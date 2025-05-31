@@ -1,0 +1,7 @@
+.env
+.input
+.secrets
+.vars
+artifacts
+payload.json
+.github

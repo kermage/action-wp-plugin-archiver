@@ -1,0 +1,35 @@
+# This is the name of the GitHub Action workflow, identifying it as "WordPress Plugin Archiver"
+name: WordPress Plugin Archiver
+
+on:
+  push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.WPPA_REPOSITORY }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # - name: Prepare Plugin
+      #   run: | # modify this step as needed
+      #     composer install --no-dev
+      #     git add -f vendor
+
+      - name: Archive ${{ github.ref_name }}
+        id: archive
+        uses: kermage/action-wp-plugin-archiver@latest
+        with:
+          slug: ${{ env.WPPA_SLUG }}
+
+      - name: Check outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.archive.outputs.plugin-slug }}
+          path: |
+            ${{ steps.archive.outputs.export-dir }}
+            ${{ steps.archive.outputs.plugin-zip }}

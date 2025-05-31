@@ -18,3 +18,7 @@
 - `export-dir` (string): Path to the export directory
 - `plugin-zip` (string): Path to the generated plugin zip
 - `plugin-slug` (string): Passed value from the input provided
+
+### Test?
+
+Check out [`.local`](./.local) to try it on your local machine.
