@@ -25,9 +25,6 @@ outputs:
 runs:
   using: composite
   steps:
-    - run: ${{ github.action_path }}/setup.sh
-      shell: bash
-
     - run: ${{ github.action_path }}/action.sh
       shell: bash
       id: action
