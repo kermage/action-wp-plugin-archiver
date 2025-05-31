@@ -1,0 +1,36 @@
+name: Actual Test
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  WPPA_REPOSITORY: WordPress/hello-dolly
+  WPPA_SLUG: hello-dolly
+
+jobs:
+  action:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.WPPA_REPOSITORY }}
+
+      - name: Checkout archiver
+        uses: actions/checkout@v4
+        with:
+          path: archiver
+
+      - name: Run kermage/action-wp-plugin-archiver@latest
+        uses: ./archiver
+        id: archive
+        with:
+          slug: ${{ env.WPPA_SLUG }}
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.archive.outputs.plugin-slug }}
+          path: ${{ steps.archive.outputs.export-dir }}
