@@ -37,6 +37,5 @@ git archive --prefix="${INPUT_SLUG}/" --output="$PLUGIN_ZIP" HEAD
 
 echo "export-dir=${EXPORT_DIR}" >> "${GITHUB_OUTPUT}"
 echo "plugin-zip=${PLUGIN_ZIP}" >> "${GITHUB_OUTPUT}"
-echo "plugin-slug=${INPUT_SLUG}" >> "${GITHUB_OUTPUT}"
 echo "::endgroup::"
 echo "✓ Successfully archived!"
